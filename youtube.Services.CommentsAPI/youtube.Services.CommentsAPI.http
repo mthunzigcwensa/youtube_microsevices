@@ -1,0 +1,6 @@
+@youtube.Services.CommentsAPI_HostAddress = http://localhost:5265
+
+GET {{youtube.Services.CommentsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
