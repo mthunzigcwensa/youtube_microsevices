@@ -104,6 +104,7 @@ namespace youtube.Web.Controllers
                     TempData["success"] = "Registration Successful";
                     return RedirectToAction(nameof(Login));
                 }
+                return RedirectToAction(nameof(Login));
             }
             else
             {
