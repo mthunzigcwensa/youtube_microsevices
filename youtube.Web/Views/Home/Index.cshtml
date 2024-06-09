@@ -1,8 +1,115 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<VideoDto>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<div class="MainDiv">
+    <div class="sideBar">
+        <div class="homeItem">
+
+            <i class="bi bi-house-door-fill sideSize"></i>
+            Home
+
+        </div>
+        
+        <div class="homeItem">
+
+            <i class="bi bi-phone-flip sideSize "></i>
+            Shors
+
+        </div>
+
+        
+        <div class="homeItem">
+
+            <i class="bi bi-collection-play sideSize"></i>
+            Subscriptions
+
+        </div>
+
+        <div class="homeItem">
+
+            <i class="bi bi-file-earmark-play sideSize"></i>
+            You
+
+        </div>
+   </div>      
+   <div class="ezohcontent" >
+       <div class="keyWords" >
+            <div class="word">
+                All
+            </div>
+            <div class="word">
+                Music
+            </div>
+            <div class="word">
+                Dark Comedy
+            </div>
+            <div class="word">
+                Sketch Comedy
+            </div>
+            <div class="word">
+                Satire
+            </div>
+            <div class="word">
+                Trailers
+            </div>
+            <div class="word">
+                Gaming
+            </div>
+            <div class="word">
+                Sketch Comedy
+            </div>
+            <div class="word">
+                Satire
+            </div>
+            <div class="word">
+                Trailers
+            </div>
+            <div class="word">
+                Gaming
+            </div>
+            <div class="word">
+                Sketch Comedy
+            </div>
+            <div class="word">
+                Sketch Comedy
+            </div>
+       </div>
+
+        <div class="videos">
+
+            @foreach (var item in Model)
+			{
+            <a asp-controller="Home" asp-action="Privacy" style="text-decoration: none;">
+                <div class="mVideo">
+                    <div class="vid">
+                        <img asp-controller="Home" asp-action="Privacy" src="@item.ThumbnailUrl" />
+                        <div class="overlay">18:00</div>
+                    </div>
+                    
+                    
+
+                    <div class="description">
+                        <div class="imgProfile">
+                            <img src="https://images.pexels.com/photos/632280/pexels-photo-632280.jpeg" />
+                        </div>
+                        <div class="allDescript">
+                            <h5>
+                                @item.Description
+                            </h5>
+                            <p class="chanelName">The channel</p>
+                            <p class="viewsNtime">120 views . 1 day ago</p>
+                        </div>
+                        <div class="mrOpt">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            }
+
+            
+            
+            
+            
+       </div>
+   </div>
+ </div>

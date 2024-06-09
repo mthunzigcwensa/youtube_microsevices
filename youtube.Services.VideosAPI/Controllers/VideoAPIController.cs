@@ -67,7 +67,7 @@ namespace youtube.Services.VideosAPI.Controllers
 
 
         [HttpPost]
-       // [Authorize]
+        // [Authorize]
         public ResponseDto Post(VideoDto videoDto)
         {
             try
@@ -76,66 +76,70 @@ namespace youtube.Services.VideosAPI.Controllers
                 _db.Videos.Add(video);
                 _db.SaveChanges();
 
+                // Handle thumbnail upload
                 if (videoDto.Thumbnail != null)
                 {
-                    string fileName = video.VideoId + Path.GetExtension(videoDto.Thumbnail.FileName);
-                    string filePath = @"wwwroot\Thumbnails\" + fileName;
+                    string thumbnailFileName = video.VideoId + Path.GetExtension(videoDto.Thumbnail.FileName);
+                    string thumbnailFilePath = Path.Combine("wwwroot", "Thumbnails", thumbnailFileName);
 
-                    var directoryLocation = Path.Combine(Directory.GetCurrentDirectory(), filePath);
-                    FileInfo file = new FileInfo(directoryLocation);
-                    if (file.Exists)
+                    // Ensure directory exists
+                    string thumbnailDirectory = Path.GetDirectoryName(thumbnailFilePath);
+                    if (!Directory.Exists(thumbnailDirectory))
                     {
-                        file.Delete();
+                        Directory.CreateDirectory(thumbnailDirectory);
                     }
 
-                    var filePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), filePath);
-                    using (var fileStream = new FileStream(filePathDirectory, FileMode.Create))
+                    // Delete existing file if exists
+                    if (System.IO.File.Exists(thumbnailFilePath))
+                    {
+                        System.IO.File.Delete(thumbnailFilePath);
+                    }
+
+                    // Save new file
+                    using (var fileStream = new FileStream(thumbnailFilePath, FileMode.Create))
                     {
                         videoDto.Thumbnail.CopyTo(fileStream);
                     }
 
                     var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
-                    video.ThumbnailUrl = baseUrl + "/ProductImages/" + fileName;
-                    video.ThumbnailLocalPath = filePath;
-
+                    video.ThumbnailUrl = baseUrl + "/Thumbnails/" + thumbnailFileName;
+                    video.ThumbnailLocalPath = thumbnailFilePath;
                 }
 
+                // Handle video upload
                 if (videoDto.Video != null)
                 {
-                    // Generate the file name using the VideoId and the original file extension
-                    string fileName = video.VideoId + Path.GetExtension(videoDto.Video.FileName);
-                    // Define the file path to save the video in the "videos" directory
-                    string filePath = Path.Combine("wwwroot", "videos", fileName);
+                    string videoFileName = video.VideoId + Path.GetExtension(videoDto.Video.FileName);
+                    string videoFilePath = Path.Combine("wwwroot", "videos", videoFileName);
 
-                    // Get the absolute path for the file
-                    var directoryLocation = Path.Combine(Directory.GetCurrentDirectory(), filePath);
-                    FileInfo file = new FileInfo(directoryLocation);
-                    if (file.Exists)
+                    // Ensure directory exists
+                    string videoDirectory = Path.GetDirectoryName(videoFilePath);
+                    if (!Directory.Exists(videoDirectory))
                     {
-                        // Delete the existing file if it exists
-                        file.Delete();
+                        Directory.CreateDirectory(videoDirectory);
                     }
 
-                    // Create a new file stream to save the uploaded video
-                    using (var fileStream = new FileStream(directoryLocation, FileMode.Create))
+                    // Delete existing file if exists
+                    if (System.IO.File.Exists(videoFilePath))
+                    {
+                        System.IO.File.Delete(videoFilePath);
+                    }
+
+                    // Save new file
+                    using (var fileStream = new FileStream(videoFilePath, FileMode.Create))
                     {
                         videoDto.Video.CopyTo(fileStream);
                     }
 
-                    // Generate the base URL for the video
                     var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
-                    // Set the VideoUrl property to the public URL of the uploaded video
-                    video.VideoUrl = baseUrl + "/videos/" + fileName;
-                    // Set the VideoLocalPath property to the local path of the uploaded video
-                    video.VideoLocalPath = filePath;
+                    video.VideoUrl = baseUrl + "/videos/" + videoFileName;
+                    video.VideoLocalPath = videoFilePath;
                 }
-
 
                 _db.Videos.Update(video);
                 _db.SaveChanges();
                 _response.Result = _mapper.Map<VideoDto>(video);
-
-
+                _response.IsSuccess = true; // Ensure success status is set
             }
             catch (Exception ex)
             {
@@ -143,8 +147,8 @@ namespace youtube.Services.VideosAPI.Controllers
                 _response.Message = ex.Message;
             }
             return _response;
-
         }
+
 
         [HttpPut]
         //[Authorize]
@@ -166,14 +170,14 @@ namespace youtube.Services.VideosAPI.Controllers
                         }
 
                         string fileName = video.VideoId + Path.GetExtension(videoDto.Thumbnail.FileName);
-                        string filePath = @"wwwroot\ProductImages\" + fileName;
+                        string filePath = @"wwwroot\Thumbnails\" + fileName;
                         var filePathDirectory = Path.Combine(Directory.GetCurrentDirectory(), filePath);
                         using (var fileStream = new FileStream(filePathDirectory, FileMode.Create))
                         {
                             videoDto.Thumbnail.CopyTo(fileStream);
                         }
                         var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
-                        video.ThumbnailUrl = baseUrl + "/ProductImages/" + fileName;
+                        video.ThumbnailUrl = baseUrl + "/Thumbnails/" + fileName;
                         video.ThumbnailUrl = filePath;
                     }
 

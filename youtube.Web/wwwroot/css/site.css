@@ -1,22 +1,736 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+html, body {
+    height: 100%;
+    overflow-y: hidden; /* Enable vertical scrollbar */
+    overflow-x: hidden; /* Disable horizontal scrollbar */
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #161718;
+}
+
+.fullScreen {
+    overflow-y: hidden; /* Enable vertical scrollbar */
+    overflow-x: hidden; /* Disable horizontal scrollbar */
+}
+
+
+.navContainer {
+    display: flex;
+    width: 100%;
+    height: 13vh;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}
+
+.hammerNlogoSection {
+    margin-right: 7%;
+    height: 100%;
+    width: 18%;
+    min-width: 250px;
+    display: flex;
+}
+
+.searchSection {
+    margin-right: 10%;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userSection {
+    height: 100%;
+    width: 15%;
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hammer {
+    height: 60%;
+    width: 18%;
+    border-radius: 50%;
+    margin-right: 2%;
+    margin-top: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: aliceblue;
+    font-size: 40px;
+}
+
+    .hammer:hover {
+        background-color: #262728;
+        cursor: pointer;
+    }
+
+.logo {
+    height: 100%;
+    width: 72%;
+    display: flex; /* Added this line */
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+    overflow: hidden; /* Ensures the content does not spill out */
+}
+
+    .logo img {
+        width: 70%;
+        height: 120%;
+    }
+
+.mainSearch {
+    background-color: #868686;
+    width: 90%;
+    height: 100%;
+    border-radius: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid;
+    border-color: #868686;
+    border-width: 2px;
+}
+
+.Sone {
+    width: 85%;
+    height: 105%;
+    background-color: #161718;
+    border-bottom-left-radius: 35px;
+    border-top-left-radius: 35px;
+    border: solid;
+    border-color: #868686;
+    border-width: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Stwo {
+    width: 18%;
+    min-width: 95px;
+    height: 100%;
+    background-color: #333639;
+    border-bottom-right-radius: 35px;
+    border-top-right-radius: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 200%;
+    color: white;
+}
+
+.searchIcon {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 200%;
+    color: white;
+    border-radius: 35px;
+    display: none;
+}
+
+.searchInput {
+    margin-left: 0%;
+    height: 100%;
+    width: 90%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: x-large;
+    color: lightgray;
+}
+
+    .searchInput::placeholder {
+        color: lightgray;
+    }
+
+.show {
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 200%;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.showBorder {
+    border-color: #868686;
+}
+
+.hideBorder {
+    border-color: #2EB2DB;
+    border-width: 5px;
+}
+
+.voice {
+    width: 57px;
+    min-width: 57px;
+    height: 70%;
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #333639;
+    border-radius: 50%;
+    font-size: 200%;
+    color: white;
+}
+
+    .voice:hover {
+        background-color: #525355;
+        cursor: pointer;
+    }
+
+.MyUserOptions {
+    width: 7%;
+    min-width: 57px;
+    height: 70%;
+    margin-right: 7%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 200%;
+    color: white;
+}
+
+    .MyUserOptions:hover {
+        background-color: #333639;
+        cursor: pointer;
+    }
+
+.MyUserOptionsOne {
+    width: 7%;
+    min-width: 57px;
+    height: 70%;
+    margin-right: 7%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 200%;
+    color: white;
+    display: none;
+}
+
+    .MyUserOptionsOne:hover {
+        background-color: #333639;
+        cursor: pointer;
+    }
+
+.profilePic {
+    background-color: red;
+    min-width: 60px;
+    height: 95%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.mainDiv {
+    width: 125%;
+    height: 100%;
+    margin-left: -100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.backg {
+    background-color: blue;
+}
+
+.MainDiv {
+    background-color: #161718;
+    height: 90vh;
+    width: 100vw;
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    overflow: hidden;
+}
+
+    .MainDiv::-webkit-scrollbar {
+        display: none;
+    }
+
+
+.MainDiv {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.sideBar {
+    width: 8%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sideSize {
+    font-size: 25px;
+}
+
+.homeItem {
+    width: 100%;
+    height: 15%;
+    display: flex;
+    flex-direction: column; /* Change to column */
+    align-items: center;
+    justify-content: center;
+    font-size: small;
+    color: white;
+    margin-bottom: 0px;
+    border-radius: 25px;
+}
+
+    .homeItem:hover {
+        background-color: #262728;
+        cursor: pointer;
+    }
+
+.ezohcontent {
+    width: 92%;
+    height: 100%;
+}
+
+.keyWords {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+    padding-left: 20px;
+    overflow-y: auto;
+}
+
+    .keyWords::-webkit-scrollbar {
+        display: none;
+    }
+
+
+.keyWords {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.word {
+    width: auto;
+    height: 80%;
+    background-color: #262728;
+    border-radius: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    color: aliceblue;
+    font-weight: bolder;
+    white-space: nowrap;
+}
+
+    .word:hover {
+        background-color: #494949;
+        cursor: pointer;
+    }
+
+.videos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    flex-wrap: wrap; /* Allow flex items to wrap to a new line */
+    padding-right: 0px;
+    padding-left: 30px;
+    padding-top: 30px;
+    padding-bottom: 100px;
+    max-height: 100%; /* Ensure the div doesn't exceed its parent's height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-width: 100%;
+}
+
+    .videos::-webkit-scrollbar {
+        display: none;
+    }
+
+
+.videos {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+
+
+.mVideo {
+    min-width: 440px;
+    height: 350px;
+    margin-right: 30px;
+    background-color: grey;
+    white-space: nowrap;
+    margin-bottom: 20px;
+}
+
+.vid {
+    position: relative;
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #161718;
+}
+
+    .vid img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+
+.overlay {
+    position: absolute;
+    bottom: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background-color: rgba(0, 0, 0, 0.9); /* Adjust transparency as needed */
+    color: white;
+    font-weight: bolder;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+
+.description {
+    width: 100%;
+    height: 30%;
+    background-color: #161718;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imgProfile {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+    .imgProfile img {
+        margin-top: 10px;
+        width: 75%;
+        height: 54%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+.allDescript {
+    width: 72%;
+    height: 100%;
+    padding-top: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+    color: aliceblue;
+}
+
+.mrOpt {
+    width: 8%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    color: aliceblue;
+    font-size: xx-large;
+    padding-top: 10px;
+}
+
+.chanelName {
+    margin-bottom: -2px;
+    margin-top: -5px;
+    font-weight: normal;
+    font-size: 20px;
+    color: #B1B1B1;
+}
+
+.viewsNtime {
+    font-weight: normal;
+    font-size: 20px;
+    color: #B1B1B1;
+}
+
+.all-MY-videos {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow-y: auto; /* Allow vertical scrolling */
+    overflow-x: visible; /* Allow children to overflow horizontally */
+}
+
+.selectedVideo {
+    width: 65%;
+    background-color: mediumpurple;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center;
+    align-items: center; /* Center items horizontally */
+    padding-bottom: 20px;
+    padding-top: 140px;
+    height: 100%;
+}
+
+    .selectedVideo::-webkit-scrollbar {
+        width: 0; /* Remove scrollbar width */
+        height: 0; /* Remove scrollbar height */
+    }
+
+    /* Optional: You can also style scrollbar track and thumb if needed */
+    .selectedVideo::-webkit-scrollbar-track {
+        background: transparent; /* Change scrollbar track color */
+    }
+
+
+.videoContainer {
+    margin-top: 6%;
+    width: 97%;
+    min-height: 560px;
+    border-radius: 20px;
+    background-color: mediumpurple;
+    overflow: hidden; /* Ensures that the video doesn't overflow the container's rounded borders */
+    position: relative; /* Needed for absolute positioning of the video inside */
+}
+
+    .videoContainer video {
+        width: 100%; /* Make video width equal to container width */
+        height: 100%; /* Make video height equal to container height */
+        object-fit: cover; /* Ensures video covers the whole container area without losing its aspect ratio */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Centers the video */
+    }
+
+.videoData {
+    width: 97%;
+    height: 20%;
+    color: white;
+    margin-top: 10px;
+}
+
+.mrDetails {
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+}
+
+    .mrDetails img {
+        margin-top: 10px;
+        width: 7%;
+        height: 75%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+.channelNameNsubs {
+    margin-left: 30px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center;
+    align-items: center; /* Center items horizontally */
+}
+
+.Subscribe {
+    background-color: white;
+    margin-left: 40PX;
+    width: 15%;
+    height: 55%;
+    border-radius: 30PX;
+    font-size: large;
+    color: black;
+}
+
+.likeCount {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 40PX;
+    background-color: #333639;
+    width: 20%;
+    height: 60%;
+    border-radius: 30PX;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center items horizontally */
+    font-size: x-large;
+}
+
+.move {
+    margin-right: 10px;
+}
+
+.love {
+    margin-left: 10px;
+}
+
+.separator {
+    border-right: 2px solid #ccc; /* Adjust thickness and color as needed */
+    height: 100%; /* Adjust height as needed */
+}
+
+.myRoundness {
+    width: 6%;
+    height: 60%;
+    background-color: #333639;
+    margin-left: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: x-large;
+}
+
+.descriptionContainer {
+    width: 97%;
+    min-height: 100px;
+    background-color: #333639;
+    margin-bottom: 10px;
+    border-radius: 20px;
+}
+
+.commentsContainer {
+    width: 97%;
+    min-height: 80px;
+    background-color: blueviolet;
+}
+
+.sideVideos {
+    width: 35%;
+    height: auto; /* or height: 100%; */
+    padding-top: 270px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    .sideVideos::-webkit-scrollbar {
+        width: 0; /* Remove scrollbar width */
+        height: 0; /* Remove scrollbar height */
+    }
+
+    /* Optional: You can also style scrollbar track and thumb if needed */
+    .sideVideos::-webkit-scrollbar-track {
+        background: transparent; /* Change scrollbar track color */
+    }
+
+.mySideVid {
+    width: 100%;
+    min-height: 30%;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-bottom: 10PX;
+}
+
+.sideImg {
+    width: 40%;
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    background-size: cover; /* Make the background image cover the entire div */
+    background-position: center; /* Center the background image */
+}
+
+    .sideImg img {
+        width: 100%; /* Ensure the image takes the full width of the parent div */
+        height: 100%; /* Allow the image's height to adjust proportionally */
+        border-radius: 15px; /* Apply border-radius to the image */
+    }
+
+.sideContent {
+    width: 55%;
+    height: 100%;
+    padding-left: 10px;
+}
+
+.sideOptions {
+    width: 5%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    color: floralwhite;
+}
+
+.moveDown {
+    margin-bottom: 5px;
+}
+
+.chanelTitle {
+    color: aliceblue;
+}
+
+.all-MY-videos::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar width */
+    height: 0; /* Remove scrollbar height */
+}
+
+/* Optional: You can also style scrollbar track and thumb if needed */
+.all-MY-videos::-webkit-scrollbar-track {
+    background: transparent; /* Change scrollbar track color */
+}
+
+@media only screen and (max-width: 660px) {
+    .searchSection {
+        width: 0; /* Set width to 0 */
+        display: none; /* Hide the element */
+    }
+
+    .navContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: 0%;
+        padding-left: 0%;
+    }
+
+    .hammerNlogoSection {
+        margin-right: 10%;
+        margin-left: 0px;
+    }
+
+    .userSection {
+        margin-right: 0px;
+    }
+
+    .sideBar {
+        display: none;
+    }
+
+    .MyUserOptionsOne {
+        width: 7%;
+        min-width: 57px;
+        height: 70%;
+        margin-right: 3%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 200%;
+        color: white;
+    }
 }
