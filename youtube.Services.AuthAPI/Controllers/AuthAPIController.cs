@@ -23,19 +23,28 @@ namespace youtube.Services.AuthAPI.Controllers
            // _configuration = configuration;
 
         }
+        
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegistrationRequestDto model)
+        public async Task<IActionResult> Register([FromForm] RegistrationRequestDto model)
         {
-            var errorMessage = await _authService.Register(model);
-            if (!string.IsNullOrEmpty(errorMessage))
+            if (ModelState.IsValid)
+            {
+                var errorMessage = await _authService.Register(model);
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    _response.IsSuccess = false;
+                    _response.Message = errorMessage;
+                    return BadRequest(_response);
+                }
+
+                return Ok(_response);
+            }
+            else
             {
                 _response.IsSuccess = false;
-                _response.Message = errorMessage;
+                _response.Message = "Invalid model state";
                 return BadRequest(_response);
             }
-         
-
-            return Ok(_response);
         }
 
         [HttpPost("login")]

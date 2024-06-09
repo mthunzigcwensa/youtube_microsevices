@@ -37,7 +37,8 @@ namespace youtube.Web.Service
             {
                 ApiType = SD.ApiType.POST,
                 Data = registrationRequestDto,
-                Url = SD.AuthAPIBase + "/api/auth/register"
+                Url = SD.AuthAPIBase + "/api/auth/register",
+                ContentType = SD.ContentType.MultipartFormData
             }, withBearer: false);
         }
     }

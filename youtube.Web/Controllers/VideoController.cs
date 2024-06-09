@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Newtonsoft.Json;
 using youtube.Web.Models;
 using youtube.Web.Service;
@@ -37,8 +38,10 @@ namespace youtube.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> VideoCreate(VideoDto model)
         {
+            string userId = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;
             if (ModelState.IsValid)
             {
+                model.UploadedBy = userId;
                 ResponseDto? response = await _videoService.CreateVideosAsync(model);
 
                 if (response != null && response.IsSuccess)

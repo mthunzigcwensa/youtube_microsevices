@@ -12,13 +12,15 @@ namespace youtube.Services.AuthAPI.Service
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AuthService(AppDbContext db, IJwtTokenGenerator jwtTokenGenerator, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AuthService(AppDbContext db, IJwtTokenGenerator jwtTokenGenerator, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtTokenGenerator = jwtTokenGenerator;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<bool> AssignRole(string email, string roleName)
@@ -78,7 +80,7 @@ namespace youtube.Services.AuthAPI.Service
                 Email = registrationRequestDto.Email,
                 NormalizedEmail = registrationRequestDto.Email.ToUpper(),
                 Name = registrationRequestDto.Name,
-                PhoneNumber = registrationRequestDto.PhoneNumber
+                PhoneNumber = registrationRequestDto.PhoneNumber,
             };
 
             try
@@ -86,6 +88,27 @@ namespace youtube.Services.AuthAPI.Service
                 var result = await _userManager.CreateAsync(user, registrationRequestDto.Password);
                 if (result.Succeeded)
                 {
+                    // Save profile picture if provided
+                    if (registrationRequestDto.ProfilePic != null && registrationRequestDto.ProfilePic.Length > 0)
+                    {
+                        string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "profilePics");
+                        string uniqueFileName = Guid.NewGuid().ToString() + "_" + registrationRequestDto.ProfilePic.FileName;
+                        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await registrationRequestDto.ProfilePic.CopyToAsync(fileStream);
+                        }
+
+                        // Update user with profile picture details
+                        user.ProfilePicLocalPath = filePath;
+                        user.ProfilePicUrl = Path.Combine("/profilePics", uniqueFileName);
+                    }
+
+                    // Update user in the database
+                    await _userManager.UpdateAsync(user);
+
+                    // Retrieve the updated user
                     var userToReturn = _db.ApplicationUsers.First(u => u.UserName == registrationRequestDto.Email);
 
                     UserDto userDto = new()
@@ -93,17 +116,20 @@ namespace youtube.Services.AuthAPI.Service
                         Email = userToReturn.Email,
                         ID = userToReturn.Id,
                         Name = userToReturn.Name,
-                        PhoneNumber = userToReturn.PhoneNumber
+                        PhoneNumber = userToReturn.PhoneNumber,
+                        ProfilePicUrl = userToReturn.ProfilePicUrl, // Add profile pic URL to DTO
+                        ProfilePicLocalPath = userToReturn.ProfilePicLocalPath // Add profile pic local path to DTO
                     };
 
-                    return "";
+                    // Return the user DTO or whatever you need
+                    return ""; // You might return a token or user ID here instead
                 }
-
             }
             catch (Exception ex)
             {
-
+                // Handle exception
             }
+
             return "Error Encountered";
         }
     }

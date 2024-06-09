@@ -32,6 +32,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+var logger = LoggerFactory.Create(loggingBuilder =>
+{
+    loggingBuilder.AddConsole();
+}).CreateLogger<Program>();
+
+logger.LogInformation("Application starting up");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
