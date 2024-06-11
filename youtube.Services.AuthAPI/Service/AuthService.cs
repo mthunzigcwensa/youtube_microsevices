@@ -60,7 +60,9 @@ namespace youtube.Services.AuthAPI.Service
                 Email = user.Email,
                 ID = user.Id,
                 Name = user.Name,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                ProfilePicUrl = user.ProfilePicUrl,
+                ProfilePicLocalPath = user.ProfilePicLocalPath,
             };
 
             LoginResponseDto loginResponseDto = new LoginResponseDto()

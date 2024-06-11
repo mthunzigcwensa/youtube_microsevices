@@ -12,15 +12,15 @@ namespace youtube.Services.AuthAPI.Controllers
         private readonly IAuthService _authService;
         protected ResponseDto _response;
         
-      //  private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
 
-        public AuthAPIController(IAuthService authService)
+        public AuthAPIController(IAuthService authService, IConfiguration configuration)
         {
             _authService = authService;
             _response = new();
             
-           // _configuration = configuration;
+            _configuration = configuration;
 
         }
         

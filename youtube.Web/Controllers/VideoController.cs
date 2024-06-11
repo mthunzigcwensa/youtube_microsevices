@@ -39,6 +39,7 @@ namespace youtube.Web.Controllers
         public async Task<IActionResult> VideoCreate(VideoDto model)
         {
             string userId = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;
+
             if (ModelState.IsValid)
             {
                 model.UploadedBy = userId;

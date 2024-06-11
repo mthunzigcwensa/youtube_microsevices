@@ -39,7 +39,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseStaticFiles();
-
+ApplyMigration();
 app.Run();
 
 void ApplyMigration()

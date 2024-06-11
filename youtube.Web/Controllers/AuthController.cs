@@ -38,7 +38,7 @@ namespace youtube.Web.Controllers
 
                 await SignInUser(loginResponseDto);
                 _tokenProvider.SetToken(loginResponseDto.Token);
-                return RedirectToAction("ProductIndex", "Home");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
