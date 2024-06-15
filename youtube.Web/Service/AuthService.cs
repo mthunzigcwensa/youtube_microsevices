@@ -45,7 +45,7 @@ namespace youtube.Web.Service
                     // Add profile picture URL to claims
                     var claims = new List<Claim>
                 {
-                    new Claim("ProfilePicUrl", loginResponse.User.ProfilePicUrl ?? string.Empty)
+                    new Claim("ProfilePicUrl", loginResponse.User.ProfilePicUrl ?? string.Empty),
                     new Claim(ClaimTypes.Name, loginResponse.User.Name),
                     new Claim(ClaimTypes.Email, loginResponse.User.Email),
                     
