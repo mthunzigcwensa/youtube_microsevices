@@ -47,7 +47,7 @@ namespace youtube.Web.Service
                 {
                     new Claim("ProfilePicUrl", loginResponse.User.ProfilePicUrl ?? string.Empty),
                     new Claim(ClaimTypes.Name, loginResponse.User.Name),
-                    new Claim(ClaimTypes.Email, loginResponse.User.Email),,
+                    new Claim(ClaimTypes.Email, loginResponse.User.Email),
                     
                 };
 
