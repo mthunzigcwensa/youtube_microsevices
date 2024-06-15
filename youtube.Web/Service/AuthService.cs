@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Newtonsoft.Json;
 using System.Security.Claims;
 using youtube.Web.Models;
@@ -10,10 +11,12 @@ namespace youtube.Web.Service
     public class AuthService : IAuthService
     {
         private readonly IBaseService _baseService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthService(IBaseService baseService)
+        public AuthService(IBaseService baseService, IHttpContextAccessor httpContextAccessor)
         {
             _baseService = baseService;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<ResponseDto?> AssignRoleAsync(RegistrationRequestDto registrationRequestDto)
         {
@@ -41,21 +44,24 @@ namespace youtube.Web.Service
                 {
                     // Add profile picture URL to claims
                     var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, loginResponse.User.Name),
-                new Claim(ClaimTypes.Email, loginResponse.User.Email),
-                new Claim("ProfilePicUrl", loginResponse.User.ProfilePicUrl ?? string.Empty)
-            };
+                {
+                    new Claim("ProfilePicUrl", loginResponse.User.ProfilePicUrl ?? string.Empty)
+                    new Claim(ClaimTypes.Name, loginResponse.User.Name),
+                    new Claim(ClaimTypes.Email, loginResponse.User.Email),
+                    
+                };
 
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
 
-                    //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                    // Use IHttpContextAccessor to access HttpContext
+                    await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 }
             }
 
             return response;
         }
+
 
 
         public async Task<ResponseDto?> RegisterAsync(RegistrationRequestDto registrationRequestDto)

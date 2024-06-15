@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var profilePicUrl = User.FindFirst("ProfilePicUrl")?.Value ?? "default-profile-pic-url";
+    var isAuthenticated = User.Identity.IsAuthenticated;
+    var claims = User.Claims.ToList();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,6 +17,17 @@
 <body>
     <header>
         <div class="navContainer">
+            @* Debugging Information *@
+            <div>
+                <p>User is authenticated: @isAuthenticated</p>
+                <p>ProfilePicUrl: @profilePicUrl</p>
+                <ul>
+                    @foreach (var claim in claims)
+                    {
+                        <li>@claim.Type: @claim.Value</li>
+                    }
+                </ul>
+            </div>
             @* first section *@
             <div class="hammerNlogoSection">
                 <div class="hammer">
@@ -31,7 +47,7 @@
                             <i class="bi bi-search searchSize"></i>
                         </div>
 
-                        <input class="searchInput" placeholder=" search" />
+                        <input class="searchInput" placeholder=" @User.Identity.Name" />
                     </div>
                     <div class="Stwo">
                         <i class="bi bi-search searchSize"></i>
@@ -57,8 +73,8 @@
                     <i class="bi bi-bell-fill"></i>
 
                 </div>
-                <div class="profilePic ">
-                    <img src="@User.Identities." style="width: 100%; height: 100%" />
+                <div class="profilePic">
+                    <img src="@profilePicUrl" style="width: 100%; height: 100%" />
                 </div>
 
             </div>
