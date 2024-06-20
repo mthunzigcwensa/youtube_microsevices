@@ -1,8 +1,5 @@
-﻿@{
-    var profilePicUrl = User.FindFirst("ProfilePicUrl")?.Value ?? "default-profile-pic-url";
-    var isAuthenticated = User.Identity.IsAuthenticated;
-    var claims = User.Claims.ToList();
-}
+﻿
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,22 +14,10 @@
 <body>
     <header>
         <div class="navContainer">
-            @* Debugging Information *@
-            <div>
-                <p>User is authenticated: @isAuthenticated</p>
-                <p>ProfilePicUrl: @profilePicUrl</p>
-                <ul>
-                    @foreach (var claim in claims)
-                    {
-                        <li>@claim.Type: @claim.Value</li>
-                    }
-                </ul>
-            </div>
             @* first section *@
             <div class="hammerNlogoSection">
                 <div class="hammer">
                     <i class="bi bi-list"></i>
-
                 </div>
                 <div class="logo">
                     <img src="https://cdn-icons-png.flaticon.com/512/2991/2991188.png" />
@@ -46,39 +31,38 @@
                         <div class="searchIcon">
                             <i class="bi bi-search searchSize"></i>
                         </div>
-
-                        <input class="searchInput" placeholder=" @User.Identity.Name" />
+                        <input class="searchInput" placeholder=" search" />
                     </div>
                     <div class="Stwo">
                         <i class="bi bi-search searchSize"></i>
                     </div>
-
                 </div>
                 <div class="voice">
                     <i class="bi bi-mic-fill"></i>
-
                 </div>
             </div>
+
             @* third section *@
             <div class="userSection">
                 <div class="MyUserOptionsOne">
                     <i class="bi bi-search"></i>
-
                 </div>
                 <div class="MyUserOptions">
                     <i class="bi bi-camera-video"></i>
-
                 </div>
                 <div class="MyUserOptions">
                     <i class="bi bi-bell-fill"></i>
-
                 </div>
                 <div class="profilePic">
-                    <img src="@profilePicUrl" style="width: 100%; height: 100%" />
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        var profilePicUrl = UserProfileService.GetProfilePicUrl();
+                        
+                        <img src="@profilePicUrl" style="width: 100%; height: 100%" />
+                    }
+                    
                 </div>
-
             </div>
-
         </div>
     </header>
     <div class="fullScreen">

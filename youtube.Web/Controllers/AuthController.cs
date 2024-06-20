@@ -26,6 +26,8 @@ namespace youtube.Web.Controllers
             LoginRequestDto loginRequestDto = new();
             return View(loginRequestDto);
         }
+
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequestDto obj)
         {

@@ -30,36 +30,12 @@ namespace youtube.Web.Service
 
         public async Task<ResponseDto?> LoginAsync(LoginRequestDto loginRequestDto)
         {
-            var response = await _baseService.SendAsync(new RequestDto()
+            return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = loginRequestDto,
                 Url = SD.AuthAPIBase + "/api/auth/login"
             }, withBearer: false);
-
-            if (response != null && response.IsSuccess)
-            {
-                var loginResponse = JsonConvert.DeserializeObject<LoginResponseDto>(response.Result.ToString());
-                if (loginResponse != null && loginResponse.User != null)
-                {
-                    // Add profile picture URL to claims
-                    var claims = new List<Claim>
-                {
-                    new Claim("ProfilePicUrl", loginResponse.User.ProfilePicUrl ?? string.Empty),
-                    new Claim(ClaimTypes.Name, loginResponse.User.Name),
-                    new Claim(ClaimTypes.Email, loginResponse.User.Email),
-                    
-                };
-
-                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var principal = new ClaimsPrincipal(identity);
-
-                    // Use IHttpContextAccessor to access HttpContext
-                    await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                }
-            }
-
-            return response;
         }
 
 

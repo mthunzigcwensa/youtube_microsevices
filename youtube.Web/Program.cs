@@ -17,6 +17,7 @@ SD.VideoAPIBase = builder.Configuration["ServiceUrls:VideoAPI"];
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddScoped<UserProfileService>();
 builder.Services.AddScoped<IVideoService, VideoService>();
 
 

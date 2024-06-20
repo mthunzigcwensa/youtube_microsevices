@@ -35,6 +35,13 @@ namespace youtube.Web.Controllers
             return View();
         }
 
+        public async Task<IActionResult> getUserData()
+        {
+            string userId = User.Claims.Where(u => u.Type == JwtRegisteredClaimNames.Sub)?.FirstOrDefault()?.Value;
+
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> VideoCreate(VideoDto model)
         {
